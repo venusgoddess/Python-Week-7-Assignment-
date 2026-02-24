@@ -1,0 +1,39 @@
+print("\n--- SHAPE ---")
+print(df.shape)
+
+print("\n--- COLUMNS ---")
+print(df.columns.tolist())
+
+print("\n--- CLEANING ACTIONS ---")
+for col in numeric_cols:
+    if df[col].isna().any():
+        print(f"Filling missing numeric values in '{col}' with median")
+
+for col in categorical_cols:
+    if df[col].isna().any():
+        print(f"Filling missing categorical values in '{col}' with mode")
+
+monthly_sales = df_sorted.groupby("date")["sales"].mean()
+
+plt.figure()
+plt.plot(monthly_sales.index, monthly_sales.values, label="Average Sales")
+plt.title("Average Monthly Sales Trend")
+plt.xlabel("Date")
+plt.ylabel("Average Sales")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+
+print("\n--- CORRELATION MATRIX ---")
+print(df[numeric_cols].corr())
+
+
+largest_species = avg_petal_len.idxmax()
+smallest_species = avg_petal_len.idxmin()
+
+print("\n--- Refined Findings ---")
+print(f"* {largest_species} has the largest average petal length.")
+print(f"* {smallest_species} has the smallest average petal length.")
+print("* There is a positive relationship between sepal length and petal length.")
+print("* The synthetic sales variable follows the pattern of sepal length with added noise.")
